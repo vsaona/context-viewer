@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #6200EE;
+  color: aliceblue;
+  margin: 0;
+  padding: 20px;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+}
+
+#language, #goBack {
+  --mdc-theme-primary: white;
+  --mdc-theme-on-primary: #6200EE;
+}
+
+/* Style the header */
+mwc-top-app-bar {
+  --mdc-theme-primary: #6200EE;
+}
+
+mwc-drawer {
+  --mdc-theme-surface: #6200EE;
+}
+
+mwc-drawer span {
+  color: white;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 30px;
+}
+
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* Style the navigation menu */
+nav {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1 0 200px;
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the content */
+article {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Style the footer */
+footer {
+  background: #555;
+  color: pink;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+  margin: 0px;
+  margin-top: auto;
+}
+
+.footer-column {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0;
+}
+
+.footer-link {
+  margin: 5px;
+}
+
+.footer-link a {
+  margin: 0;
+  color: #A2A0FF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+  
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,118 @@
+@keyframes appear {
+  0% {opacity: 0;}
+  100% {opacity: 100;}
+}
+@keyframes disappear {
+  0% {opacity: 100;}
+  100% {opacity: 0;}
+}
+.arrow {
+  fill: #D7D7D7;
+  stroke: black;
+  stroke-width: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.genomaTag {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
+}
+.underlined {
+  text-decoration: underline;
+}
+text {
+  cursor: grab;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+text:active {
+  cursor: grabbing;
+}
+.container {
+  display: block;
+  max-width: none;
+}
+.canvas {
+  width: 100%;
+  height: auto;
+}
+
+.toolBar {
+  animation: appear 1s;
+  padding: 10px;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  max-width: 100vw;
+}
+#imageToolBar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  background: #FFFA;
+  border-radius: 20px;
+}
+.toolBar * {
+  margin: 0 10px;
+}
+.hideButton {
+  --mdc-theme-primary: #E94343;
+}
+.toolBar mwc-button {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#downloadButton {
+  margin: 10px;
+}
+.clickableIcon {
+  cursor: pointer;
+  width: 24px;
+}
+
+.data {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  border: solid #6200EE;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 0px;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 0;
+  max-width : 80vw;
+}
+.dataEntry {
+  display:flex;
+  flex-direction: row;
+}
+.dataTag {
+  font-weight: bold;
+  flex: 0 1 20%;
+}
+.dataContent {
+  flex: 0 1 80%;
+}
+.datuum {
+  padding: 10px;
+  word-wrap: break-word;
+  min-width: 20%;
+}
+
+.invisible {
+  display: none
+}
+.disappear {
+  animation: disappear 1s forwards;
+}

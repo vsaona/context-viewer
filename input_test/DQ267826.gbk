@@ -1,0 +1,213 @@
+LOCUS       DQ267826                5299 bp    DNA     linear   BCT 26-JUL-2016
+DEFINITION  Nocardia sp. C-14-1 catechol, 2-dioxygenase and phenol hydroxylase
+            gene clusters, partial sequence.
+ACCESSION   DQ267826
+VERSION     DQ267826.1
+KEYWORDS    .
+SOURCE      Nocardia sp. C-14-1
+  ORGANISM  Nocardia sp. C-14-1
+            Bacteria; Bacillati; Actinomycetota; Actinomycetes;
+            Mycobacteriales; Nocardiaceae; Nocardia.
+REFERENCE   1  (bases 1 to 5299)
+  AUTHORS   Fang,P., Xu,D., Zhang,Y., Cao,W., Zhao,J., Zhu,Y. and Qin,Z.
+  TITLE     Catecho1, 2-dioxygenase/phenol hydroxylase operons from Nocardia
+            sp. C-14-1
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 5299)
+  AUTHORS   Fang,P., Xu,D., Zhang,Y., Cao,W., Zhao,J., Zhu,Y. and Qin,Z.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (26-OCT-2005) College of Environmental Sciences &
+            Engineering, National Key Laboratory of Pollution Control &
+            Resources Reuse, Tongji University, 1239 Siping Road, Shanghai
+            200092, P. R. China
+FEATURES             Location/Qualifiers
+     source          1..5299
+                     /organism="Nocardia sp. C-14-1"
+                     /mol_type="genomic DNA"
+                     /strain="C-14-1"
+                     /db_xref="taxon:312532"
+     misc_feature    complement(<1..3257)
+                     /note="catechol, 2-dioxygenase gene cluster"
+     CDS             complement(<1..127)
+                     /note="pFQ26.1c; similar to Rhodococcus erythropolis
+                     muconolactone isomerase and Nocardia farcinica IFM
+                     muconolactone delta-isomerase"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="muconolactone isomerase"
+                     /protein_id="ABB82572.1"
+                     /translation="MALFHVRMDVDIPRDLDPEVRAETVAREKAYSQELQREGKWR"
+     CDS             complement(183..1409)
+                     /note="pFQ26.2c; similar to Rhodococcus erythropoliscis
+                     muconate cycloisomerase"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="cis-muconate cycloisomerase"
+                     /protein_id="ABB82573.1"
+                     /translation="MTNAGVRQGHRHSSSRRPGCCPHHRRNPIVSCSMSDPDLKIVSI
+                     DTTIVDVPLVRPHKFATTTAEKQPILLVAITTAGGVTGHGEGVVPGGPWWGGESVETM
+                     KAIVDRYIAPYITGRGVDEISGIMVDIERVVSGARFAKAAVDVALHDAWARALGVGVH
+                     TLLGGAFRTGVDVRWALGAAPVEEILEEVEEKMAARLNFAFKLKMGALDPKVDTERVV
+                     TIAQALEGKAGVSIDVNARWDRFTALRYVPQLVDGGVELIEQPTPGEQREVLAEINRL
+                     VSAPVMADESVQTPHDALEIAKLGAADVIALKTTKCGGLQRSKEVVAVAKAAGIRCHG
+                     ATSIEGPIGTAASVHFACAEPGINYGTELFGPQLFAVELLQTPLDYSEGQVHLPQGPG
+                     LGVELDMDVVKHLARD"
+     CDS             complement(1438..2289)
+                     /note="pFQ26.3c; similar to Rhodococcus rhodochrous and
+                     Nocardia sp. H17-1 catechol 1,2-dioxygenase, and to
+                     Nocardia farcinica IFM 10152 catechol 1,2-dioxygenase
+                     nfa35220"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="catechol 1,2-dioxygenase"
+                     /protein_id="ABB82574.1"
+                     /translation="MTTTENPTAHASGNAATDKFKSERVSSDTSVERAAAIYKDVLGA
+                     FAEIIHKHQVTYDEYRVLKQWMIDVGEYGEWPLWLDVFVEHEIEEVHYNRKHFSGTKG
+                     SIEGPYYVPDSPKLPAKCTMPMREQDKAAEALIFKGQVTDLEGKGLQGATVELWHADE
+                     EGYYSQFAPGIPEWNLRGTIECDDEGNFEITTLKPAPYKIPADGPTGWFIDSYGGHPW
+                     RPAHLHLMVKAPGKRAITTQLYFQGGEWVEDDVATATKPELILDPQPNADGVDEVTYN
+                     FALDPEA"
+     CDS             2487..3257
+                     /note="pFQ26.4; similar to Rhodococcus opacus regulator of
+                     catechol degradative operon and to Nocardia farcinica IFM
+                     10152 putative transcriptional regulator nfa35250"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="regulator of catechol degradative operon"
+                     /protein_id="ABB82575.1"
+                     /translation="MPSQDRDFVQSIERGFAVLLAFDERHPTPSLAELAAKTDLSRPA
+                     VRRILLTLQKLGYVTSTGSRWSLTPRVLSIGQHYSASHALVEAAMPRLVEIAEYTGES
+                     ASLGVLDGAEVVYAARVPVRRIMSINVSVGTRVPAYATSMGRALLAWAPEELVEQVVA
+                     ATRFEKLATATVRNADELRAELARVRAQGYALTSAELEEGLISAAAPVRDATGTVVGV
+                     LACSTSTARHTPGEFRELAAECLMKSAHALGADLGYRG"
+     misc_feature    complement(3264..>5299)
+                     /note="phenol hydroxylase gene cluster"
+     CDS             complement(3264..4214)
+                     /note="pFQ26.5c; similar to Nocardia farcinica IFM 10152
+                     putative transcriptional regulator nfa43670 and
+                     Rhodococcus erythropolis AraC/XylS family of regulatory
+                     proteins ThcR"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="transcriptional regulator"
+                     /protein_id="ABB82576.1"
+                     /translation="MHTGGAHVVSTPEPVDWDEAEHVVSDAYFPHTLTPLARGSEPHV
+                     NVRSLQLGPLRLARIGWGAEVAVDSDHPGAYAVNIPLSGHIESVAAGLEVSSAQGQAS
+                     VFRPDTAARITRWTEDCEIVGVKLDRDYLDREMHRILGRPDLGLPDQVDLTSEAGRSW
+                     MALLQSVVEQLRADEGLWRNPLVADQLSGALTSAFVLAVMPNAGAGTAARPRIVKRVL
+                     DRIHEDPAQPWTTADMAELAGVSVRRLQEGFREYLGVCPRDYLLDLRLERIHEELAAG
+                     DPATTSVTDVALRWGMTHTGRFAAAYRRKYGVAPSATLRG"
+     CDS             4532..5095
+                     /note="pFQ26.6; similar to Nocardia farcinica IFM 10152
+                     putative phenol hydroxylase small subunit nfa43660,
+                     Streptomyces carzinostaticus subsp. neocarzinostaticus
+                     monooxygenase, and Rhodococcus opacus reductase component
+                     of 4-nitrophenol monooxygenase"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="phenol hydroxylase"
+                     /protein_id="ABB82577.1"
+                     /translation="MDQRRLRNIFGQFASGVTVITCANHEGTPHGATVTAFTAVSLEP
+                     RLCQVTLTRTSKACAFLSGAPFAVNILAADQVDTALHFAGRPQTPGPVFEDGPTAPVL
+                     TGAAATLSCVPWREYDGGDHVIYIGEIVDAQCRDTEPLLFYRSTFHELGAPSASAAWN
+                     GSMDDPHSGWFDARTRFTPLHVDTAVR"
+     CDS             5143..>5299
+                     /note="pFQ26.7; similar to Nocardia farcinica IFM 10152
+                     putative phenol hydroxylase large subunit nfa43650"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="phenol hydroxylase"
+                     /protein_id="ABB82578.1"
+                     /translation="MTTLESRPDENAIDRSEVNVAADAPANRQQNFATRPMTGDEYIE
+                     SIKDGREI"
+ORIGIN      
+        1 cccgccactt gccctcgcgc tgcagttcct ggctgtacgc cttctcccgc gcgacggtct
+       61 cggcgcgcac ctcggggtcg aggtcgcggg ggatgtcgac gtccatgcga acgtggaaca
+      121 gtgccatggt cggtactcct ttcggccgag cgggtgctac cggaaccgcg cacggggggt
+      181 ggtcagtcgc gggcgaggtg cttgacgacg tccatgtcga gttcgacgcc gaggccgggt
+      241 ccctggggca ggtgcacctg accctcggag tagtccagcg gggtctgcag gagttcgacg
+      301 gcgaacagct gcggcccgaa cagttcggtg ccgtagttga ttcccggctc ggcgcaggcg
+      361 aagtggacgg atgccgcggt gccgatgggt ccttcgatcg aagtggcgcc gtggcagcgg
+      421 attccggcag ccttcgcgac cgccacgacc tccttgctgc gctgcagacc accgcacttg
+      481 gtggtcttga gggcgatgac gtcggcggcc ccgagcttgg cgatctcgag ggcgtcgtgc
+      541 ggggtctgca cggactcgtc ggccatcacc ggggcggaca cgagccggtt gatctcggcg
+      601 agcacttcac gctgctcgcc gggggtgggc tgctcgatga gctcgacacc gccgtcgacg
+      661 agttgcggaa cgtatcgcag cgcggtgaac cggtcccagc gggcgttgac gtcgatgctc
+      721 acgccggcct tgccctcgag ggcctgagcg atcgtgacga cgcgttcggt gtcgaccttc
+      781 gggtcgagcg cgcccatctt gagcttgaac gcgaagttca gccgtgccgc catcttctcc
+      841 tcgacctcct cgaggatttc ttcgaccggt gccgcaccga gcgcccaccg cacgtcgacg
+      901 ccggtgcgga aggcgccacc gagcagggtg tgcaccccga cgccgagggc gcgggcccac
+      961 gcgtcgtgca gggcgacatc gacggccgcc ttggcgaaac gggcgccgga gacgacgcgt
+     1021 tcgatgtcga ccatgatgcc gctgatctcg tcgacgccgc ggccggtgat gtagggggcg
+     1081 atgtagcggt cgacgatcgc cttcatggtc tcgacggatt cgccgcccca ccacggaccg
+     1141 ccggggacga cgccctctcc gtggccggtg accccgcccg cggtggtgat cgccacgagc
+     1201 aggatgggtt gcttctcggc ggtggtggtg gcgaacttgt ggggacgcac gagcggtacg
+     1261 tcgacgatcg tcgtatcgat cgagacgatc ttcaggtcgg ggtcggacat cgaacagctc
+     1321 acaatcggat ttcggcggtg atgcgggcaa cagccgggcc tccgcgacga cgaatgccgg
+     1381 tgcccttggc ggacaccggc attcgtcacc actcgtggac ccggttcaca ggagtgctca
+     1441 ggcctcgggg tcgagcgcga agttgtaggt cacctcgtcg acgccgtcgg cgttcggctg
+     1501 cgggtccagg atcagctcgg gcttggtcgc ggtcgcgacg tcgtcctcga cccactcgcc
+     1561 gccctggaag tagagctggg tggtgatggc gcgcttgccc ggagccttca ccatgaggtg
+     1621 caggtgggcg ggacgccacg ggtggccgcc gtaggagtcg atgaaccagc cggtcgggcc
+     1681 gtcggccggg atcttgtagg gcgcgggctt gagcgtggtg atctcgaagt tgccctcgtc
+     1741 gtcgcactcg atggtgccgc gcaggttcca ctcggggatg ccgggggcga actgcgagta
+     1801 gtagccctcc tcgtcggcgt gccacagctc gacggtggcg ccctgcaggc ccttgccctc
+     1861 gaggtcggtg acctggccct tgaagatcag cgcctcggcg gccttgtcct gctcgcgcat
+     1921 cggcatggtg cacttggccg gcagcttcgg cgagtccggc acgtagtagg ggccctcgat
+     1981 gctgcccttg gtgccggaga agtgcttgcg gttgtagtgc acttcctcga tctcgtgctc
+     2041 gacgaagacg tccagccaca gcggccactc gccgtactcg ccgacgtcga tcatccactg
+     2101 cttgagcacc cggtactcgt cgtaggtgac ctggtgcttg tggatgatct cggcgaacgc
+     2161 accgagcacg tccttgtaga tggcagcggc gcgctcgacc gacgtgtccg acgagacccg
+     2221 ctcgctcttg aacttgtcgg tggcggcgtt gcccgaggcg tgggcggtgg ggttttcggt
+     2281 ggtggtcatg tgtcctcctc ggcgaggctc gaacggtggt cgcgaaagct gtgggtggtg
+     2341 atcgcggggc tggcgctctc gccactcgag ttgtacgctg tgcgtacttc cgtatcgcag
+     2401 tgcgtacaca cactgtgcgt ccagtcacag gtgattgtca acacccgggc gcccggattg
+     2461 cccgaaaccg caggtaggag accacaatgc ctagtcagga ccgggatttc gtccagagca
+     2521 tcgaacgggg cttcgcggtg ctgctcgcgt tcgacgagcg gcatcccacc ccgtccctcg
+     2581 ccgaactggc agcgaagacc gacctgtccc gccctgcggt gcgccgcatc ctgctcaccc
+     2641 tgcagaagct cggctacgtg accagcaccg gcagccgctg gtcgctgacc ccgcgcgtgc
+     2701 tcagcatcgg ccagcactac tccgcctccc acgccctggt cgaggcggcc atgccgcgac
+     2761 tggtggagat cgccgagtac accggcgaat ccgcctccct cggggtgctc gacggcgcgg
+     2821 aggtcgtcta cgccgcccgc gtccccgtgc gccgcatcat gagcatcaac gtctcggtcg
+     2881 gcacccgggt cccggcgtac gccacgtcga tgggccgggc gctgctggcg tgggcacccg
+     2941 aggaactcgt cgagcaggtc gtcgccgcga cccgcttcga gaagctcgcc accgccaccg
+     3001 tgcgcaacgc cgacgaattg cgcgccgagc tcgcgcgcgt gcgtgcccag ggctacgcgc
+     3061 tcacctccgc cgagctcgag gaggggctga tctcggccgc ggcgccggtc cgggacgcga
+     3121 ccggcaccgt ggtcggcgtg ctcgcctgct cgacatcgac ggcccggcac acacccgggg
+     3181 agttccgcga gctcgccgcg gaatgcctga tgaagtccgc gcacgccctc ggcgccgacc
+     3241 tcggataccg cggatagggc gggtcaaccc cgcagggtcg ccgacggcgc caccccgtac
+     3301 ttgcggcggt aggcggccgc gaatcggccg gtgtgggtca tcccccagcg cagggccacg
+     3361 tccgtgaccg acgtcgtcgc cgggtcgccg gccgcgagtt cctcgtggat ccgctcgagc
+     3421 cgcagatcga gcaggtagtc gcggggacag acaccgaggt actcgcggaa gccctcctgc
+     3481 agccggcgca cactcacacc cgccagctcg gccatgtccg cggtggtcca cggctgcgcc
+     3541 gggtcctcgt ggatgcggtc gagaacgcgc ttgacgatcc gtggccgcgc cgccgtgccg
+     3601 gcacccgcgt tcggcatcac ggcgagcacg aatgccgagg tcagcgcccc ggaaagctgg
+     3661 tcggcgacga gggggttgcg ccacagcccc tcgtccgccc gcagctgctc gaccaccgac
+     3721 tgcagcaggg ccatccagct ccgccccgcc tcgctcgtca ggtccacctg gtcgggcagc
+     3781 ccgaggtcgg gacgaccgag gatccggtgc atctcgcggt cgaggtagtc acggtcgagc
+     3841 ttgactccga cgatctcgca gtcctcggtc caccgggtga tccgcgccgc cgtgtcgggc
+     3901 cggaacaccg aggcctgccc ctgggcggaa ctcacttcca gtcccgccgc caccgactcg
+     3961 atgtggccgg acagcgggat gttgaccgcg tacgcacccg gatgatccga atccaccgcg
+     4021 acctcggccc cccagccgat acgcgcgagc cgcagcggac cgagctgcag cgaccgcacg
+     4081 ttgacatggg gttccgaacc tcgtgcgagc ggggtcaggg tgtgcgggaa atacgcgtcg
+     4141 gacaccacat gctcggcctc gtcccagtcg accggctccg gcgtcgacac cacgtgtgca
+     4201 cctcccgtgt gcattctcgg gaccttcggc cctgcatcct cggggcattt cagcccgtgt
+     4261 cgtccgaggg ctttcagccc gtgtcgtccg agggctttca gcccgtgtcg tccgagggct
+     4321 ttcagcccgt gtcgtccgag ggctttcagc ccgtgtccgc gaacactact acccagtgtg
+     4381 atgagcaaca cgtccccggg caaacagcgt cgttcgtcat gacgaccgcg tcgaacggat
+     4441 agcgaccgcg ctcagcggat cgcgaaggcc gtccgaccgc tcctatggtc tacatcacat
+     4501 cacgacggaa cgaccggcaa ggagcgccga aatggatcag cgtcggctcc gaaacatctt
+     4561 cggacagttc gcaagtggcg tcaccgtgat cacctgcgcc aaccacgagg gcaccccgca
+     4621 cggcgcaacg gtcaccgcgt tcaccgcggt ctccctcgag ccccgcctgt gccaggtcac
+     4681 cctgacccgg acgtccaagg cgtgcgcctt cctctccggc gcgccgttcg cagtgaacat
+     4741 cctcgccgcc gaccaggtcg acaccgccct gcacttcgcc ggccggccgc agacccccgg
+     4801 cccggtgttc gaggacggcc ccaccgcacc ggtgctcacc ggagcagcgg caaccctgtc
+     4861 ctgcgttccg tggcgcgagt acgacggcgg cgaccacgtc atctacatcg gcgagatcgt
+     4921 cgacgcgcag tgccgcgaca ccgagccgct gctgttctac cgcagcacct tccacgaact
+     4981 cggcgcaccg agcgcctccg cggcgtggaa cgggtcgatg gacgacccgc acagcggctg
+     5041 gttcgacgcc cggacccggt tcaccccgct gcacgtcgac accgccgtcc gctgaccccg
+     5101 catcttccat cccagtcacg tcccattcgc aaggagacag ccatgaccac cctcgagtcc
+     5161 cgtcccgacg agaacgcgat cgaccgttcc gaggtcaacg tcgccgccga cgccccggcg
+     5221 aaccggcagc agaacttcgc cacgcgaccg atgaccggcg acgagtacat cgagtcgatc
+     5281 aaggacggcc gcgagatct
+//

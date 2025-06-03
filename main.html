@@ -1,0 +1,523 @@
+<title>Genomic context diagram editor</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script src="mwc_bundle/mwc-material-bundle.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts/genomaData.js"></script>
+<script src="scripts/input.js"></script>
+<script src="scripts/render.js"></script>
+
+<link rel="stylesheet" href="stylesheets/mdc.css">
+<link rel="stylesheet" href="stylesheets/input.css">
+<!-- Your application must load the Roboto and Material Icons fonts. -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+<link rel="icon" href="images/favicon.png">
+</head>
+<body>
+<header>
+<div id = "Explicacion" class = "mdc-typography">
+  This tool can help you draw high-quality genomic context graphics.<br>
+  Please, choose the contexts you want to draw. You can do this with "Draw my contexts" if you know exactly what you want to draw,
+  or you may do a BLAST search with "BLAST &amp; Draw", and draw the results in their context.
+</div>
+<div id = "opciones">
+  <mwc-button id = "language" label = "Ver en español">
+  </mwc-button>
+</div>
+</header>
+
+<mwc-dialog id = "tutorial1" class = "container" heading = "Welcome!">
+<div id = "tutorialContainer1" class = "tutorialContainer">
+  <div class = "tutorialText">
+    <p>
+      This app allows you to generate a genomic context diagram. You can use any genome assembly from GenBank and even use your own .gbff/.gbk files.
+    </p>
+    <p>
+      <br>
+      We'll only store the data we need for drawing, and we will delete it afterwards.
+    </p>
+  </div>
+  <div class = "tutorialImage">
+    <img src = "images/tutorial1.png">
+  </div>
+</div>
+<mwc-button dialogAction = "next" slot = "primaryAction" raised>
+  Next
+</mwc-button>
+</mwc-dialog>
+<mwc-dialog id = "tutorial2" class = "container" heading = "From BLAST to color">
+<div id = "tutorialContainer2" class = "tutorialContainer">
+  <div class = "tutorialText">
+    <p>
+      You may do a BLAST search for homologous genes, and we'll draw the results in their respective contexts.
+    </p>
+  </div>
+  <div class = "tutorialImage">
+    <img src = "images/tutorial2.png">
+  </div>
+</div>
+<mwc-button dialogAction = "back" slot = "secondaryAction">
+  Back
+</mwc-button>
+<mwc-button dialogAction = "next" slot = "primaryAction" raised>
+  Next
+</mwc-button>
+</mwc-dialog>
+<mwc-dialog id = "tutorial3" class = "container" heading = "Customize your diagram">
+<div id = "tutorialContainer3" class = "tutorialContainer">
+  <div class = "tutorialText">
+    <p>
+      See all about the genes, edit your drawing colors, shapes, and show the information you want to show.
+    </p>
+    <p>
+      Click on the genes, their tags or the assembly's tags to see more about them and edit them.
+    </p>
+  </div>
+  <div class = "tutorialImage">
+    <img src = "images/tutorial3.png">
+  </div>
+</div>
+<mwc-button dialogAction = "back" slot = "secondaryAction" onClick = "goToWindow(3, 2)">
+  Back
+</mwc-button>
+<mwc-button dialogAction = "close" slot = "primaryAction" raised>
+  Got it!
+</mwc-button>
+</mwc-dialog>
+
+<form id = "tab1" action="fileUploadAndRender" method="post" enctype="multipart/form-data" class="tabContent container">
+  <div class="main">
+    <div class = "main" id = "genomaList">
+      <div class = "hr">
+        <hr>
+        Context 1
+      </div>
+      <div class = "genomaData" id = "genomaData0">
+        <div id = "genomaSource0">
+          <mwc-select outlined label="Source" id = "genomaSourceType0" onchange = "changeGenomaSource(this.value, 0);" class = "genomaSourceType formData">
+            <mwc-list-item value="file">From file</mwc-list-item>
+            <!-- <mwc-list-item value="locus">locus tag</mwc-list-item> -->
+            <mwc-list-item value="accesion">Assembly accession</mwc-list-item>
+          </mwc-select>
+          <span class = 'tooltip'><img src = 'images/help_outline_black_24dp.svg' style = 'width: 20px;'><span class = 'tooltiptext'>
+            Where to get the context from. It may be from a GenBank flat file (.gbff/.gbk) or specifying locus tag and accession number, so we can get it from the database.
+          </span> </span>
+          <br>
+          <span
+            id = "file0"
+            class = "genomaSpec file invisible">
+            <div>
+              <input id = "fileSelectButton0" onChange = "updateFile(this.value, '0')" type="file" class="form-control-file" name="file0">
+            </div>
+            <mwc-button onclick = "selectFile('0')" label = "Browse file" outlined></mwc-button>
+            <div id = "fileName0">No file selected</div>
+          </span>
+          <mwc-textfield
+            outlined
+            id = "locus0"
+            label="locus tag"
+            class = "genomaSpec locus invisible formData"
+            pattern = "\s*[a-zA-Z]\w*_.*\s*">
+          </mwc-textfield>
+          <mwc-textfield
+            outlined
+            id = "accesion0"
+            label="accession number"
+            class = "genomaSpec accesion invisible formData"
+            pattern = "[Gg][Cc]([Aa]|[Ff])_.*">
+          </mwc-textfield>
+        </div>
+
+        <div class = "extraInput">
+          <div class = "genomaBoundaries invisible" id = "genomaBoundaries0">
+            <mwc-textfield
+              outlined
+              id = "desde0"
+              label = "From"
+              class = "formData"
+              pattern = "\s*([a-zA-Z]\w*_.*|\d+)\s*">
+            </mwc-textfield>
+            <mwc-textfield
+              outlined
+              label = "To"
+              id = "hasta0"
+              class = "formData"
+              pattern = "\s*([a-zA-Z]\w*_.*|\d+)\s*">
+            </mwc-textfield>
+            <span class = 'tooltip'><img src = 'images/help_outline_black_24dp.svg' style = 'width: 20px;'><span class = 'tooltiptext'>
+              Which adjacent genes you wish to draw. Please specify the first and last locus tag to be included.
+            </span> </span>
+          </div>
+
+          <div class = "genomaContext invisible" id = "genomaContext0">
+            <div class = "row mwc-typography">
+              Include
+              <mwc-textfield
+                outlined
+                type = "number"
+                min = "0"
+                value = "3"
+                id = "contextoAntes0"
+                class = "formData">
+              </mwc-textfield> genes before and
+            </div>
+            <div class = "row">
+              <mwc-textfield
+                outlined
+                type = "number"
+                min = "0"
+                value = "3"
+                id = "contextoDespues0"
+                class = "formData">
+              </mwc-textfield> genes after
+              <span class = 'tooltip'><img src = 'images/help_outline_black_24dp.svg' style = 'width: 20px;'><span class = 'tooltiptext'>
+                Starting from the specified gene, how many more should be drawn upstream and downstream.
+              </span> </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div>
+      <mwc-button onClick = "addGenoma()" id = "addGenomaButton" label = "Add context" icon = "add" outlined></mwc-button>
+      <span class = 'tooltip'><img src = 'images/help_outline_black_24dp.svg' style = 'width: 20px;'><span class = 'tooltiptext'>
+        Add other context to draw below the other ones in the same image.
+      </span> </span>
+    </div>-->
+  </div>
+  
+  <input type="submit" class = "submitInput" style = "opacity: 0;" id = "submitMyContexts" onClick = "document.getElementById('upload').show();">
+  <div>
+    <mwc-button id="myContextsDrawItButton" label="Draw it!" raised onclick = "document.getElementById(document.getElementById('tab-bar').activeIndex?'submitMyContexts':'submitSearchHomologous').click();"></mwc-button>
+    <span class = 'tooltip'><img src = 'images/help_outline_black_24dp.svg' style = 'width: 20px;'><span class = 'tooltiptext'>
+      Generate the genomic context graphic using the specified contexts.
+    </span> </span>
+  </div>
+</form>
+
+<div class = "container">
+  <svg viewbox = "0 0 3000 20" class="canvas" id="canvas">
+      Sorry, looks like your web browser doesn't support this technology. We suggest using Mozilla Firefox
+  </svg>
+</div>
+<div id = "imageToolBar" class = "toolBar invisible">
+  <mwc-button
+      raised
+      id = "downloadButton"
+      onClick = "var e = document.createElement('script'); e.setAttribute('src', '../svg-crowbar.js'); e.setAttribute('class', 'svg-crowbar'); document.body.appendChild(e);"
+      label = "Download"
+      icon = "⇩">
+  </mwc-button>
+  <mwc-formfield>
+      <img src = 'images/zoom_out_black_24dp.svg' class = "clickableIcon" style = 'width: 20px;' onclick = "triggerZoomOut()">
+      <mwc-slider
+          id = "zoomBar"
+          step="10"
+          pin
+          min="20"
+          max="500"
+          value="100"
+          onchange = "zoom(this.value)">
+      </mwc-slider>
+      <img src = 'images/zoom_in_black_24dp.svg' class = "clickableIcon" style = 'width: 20px;' onclick = "triggerZoomIn()">
+  </mwc-formfield>
+  <img id = 'goToBarIndicator' src = 'images/arrow_downward_black_24dp.svg' style = 'width: 40px;' class = "invisible disappear">
+</div>
+
+<div id = "arrowToolBar" class = "invisible toolBar">
+  <mwc-textfield
+      id = "arrowColor"
+      outlined
+      label = "Color"
+      value = "#FFFFFF"
+      data-jscolor = "{position:'top', previewElement:'none', onInput: 'updateColorField(this)'}"
+      oninput = "updateColor(this)">
+  </mwc-textfield>
+  <mwc-textfield
+      id = "arrowStrokeWidthMwcTextField"
+      outlined
+      label = "Stroke width"
+      type = "number"
+      value = "0"
+      step = "5"
+  min = "0"
+      oninput = "updateStrokeWidth(this)">
+  </mwc-textfield>
+  <!--<mwc-textfield
+      id = "arrowOpacity"
+      outlined
+      label = "Fill opacity"
+      type = "number"
+      value = "100"
+      max = "100"
+      min = "0"
+      oninput = "updateOpacity(this)">
+  </mwc-textfield>-->
+  <mwc-select outlined label="Arrow style" id = "arrowStyleSelector" onchange = "updateArrowStyle(this)">
+      <mwc-list-item value = "arrow"   > Arrows    </mwc-list-item>
+      <mwc-list-item value = "triangle"> Triangles </mwc-list-item>
+      <mwc-list-item value = "tag"     > Tags      </mwc-list-item>
+  </mwc-select>
+  <mwc-button
+      id = "geneHideButton"
+      outlined
+      label="Hide this gene"
+      class = "hideButton"
+      onclick = "hideGene(true)">
+  </mwc-button>
+  <mwc-button
+      id = "geneShowButton"
+      raised
+      label="Show this gene"
+      class = "invisible"
+      onclick = "hideGene(false)">
+  </mwc-button>
+  <mwc-button id = "alignGeneButton" raised onclick = "setInterestGene()"> Align this gene </mwc-button>
+</div>
+<div id = "arrowTextToolBar" class = "invisible toolBar">
+  <mwc-textfield
+      id = "geneFontSize"
+      outlined
+      label = "Font size"
+      value = "24"
+      step = "10"
+      type = "number"
+      oninput = "updateGeneFontSize(this)">
+  </mwc-textfield>
+  <mwc-textfield
+      id = "geneName"
+      outlined
+      label = "Gene name"
+      value = ""
+      oninput = "updateName(this)">
+  </mwc-textfield>
+</div>
+<div id = "globalToolBar" class = "invisible toolBar">
+  <mwc-textfield
+      id = "genomaTextSizeInput"
+      outlined
+      label = "Font size"
+      value = "24"
+      step = "10"
+      type = "number"
+      oninput = "updateGenomaFontSize(this)">
+  </mwc-textfield>
+  <mwc-textfield
+      id = "genomaName"
+      outlined
+      label = "Context name"
+      value = ""
+      oninput = "updateName(this)">
+  </mwc-textfield>
+
+  <mwc-textfield
+      id = "midLineWidth"
+      outlined
+      label = "Midline Width"
+      type = "number"
+      step = "10"
+      value = ""
+      oninput = "updateMidLineWidth(this)">
+  </mwc-textfield>
+  <mwc-button
+      id = "genomaHideButton"
+      outlined
+      label="Hide this context"
+      class = "hideButton"
+      onclick = "hideContext()">
+  </mwc-button>
+</div>
+<div id = "genomaData" class = "invisible data">
+  <div id = "genomaDefinition" class = "dataEntry">
+      <span id = "genomaDefinitionTag" class = "dataTag datuum">
+          Assembly Definition
+      </span>
+      <span id = "genomaDefinitionContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "genomaAccession" class = "dataEntry">
+      <span id = "genomaAccessionTag" class = "dataTag datuum">
+          Assembly Accession
+      </span>
+      <span id = "genomaAccessionContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "genomaFtpPath" class = "dataEntry">
+      <span id = "genomaFtpPathTag" class = "dataTag datuum">
+          Source link
+      </span>
+      <span id = "genomaFtpPathContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "genomaTaxid" class = "dataEntry">
+      <span id = "genomaTaxidTag" class = "dataTag datuum">
+          Taxonomic ID
+      </span>
+      <span id = "genomaTaxidContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "genomaSubmitter" class = "dataEntry">
+      <span id = "genomaSubmitterTag" class = "dataTag datuum">
+          Entry submitter
+      </span>
+      <span id = "genomaSubmitterContent" class = "dataContent datuum">
+      </span>
+  </div>
+</div>
+<div id = "geneData" class = "invisible data">
+  <div id = "geneLocus" class = "dataEntry">
+      <span id = "geneLocusTag" class = "dataTag datuum">
+          Gene Locus tag
+      </span>
+      <span id = "geneLocusContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "geneInference" class = "dataEntry">
+      <span id = "geneInferenceTag" class = "dataTag datuum">
+          Gene inference
+      </span>
+      <span id = "geneInferenceContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "geneProduct" class = "dataEntry">
+      <span id = "genProductTag" class = "dataTag datuum">
+          Product
+      </span>
+      <span id = "geneProductContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "geneNote" class = "dataEntry">
+      <span id = "geneNoteTag" class = "dataTag datuum">
+          Note
+      </span>
+      <span id = "geneNoteContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "geneSize" class = "dataEntry">
+      <span id = "geneSizeTag" class = "dataTag datuum">
+          Size
+      </span>
+      <span id = "geneSizeContent" class = "dataContent datuum">
+      </span>
+  </div>
+  <div id = "geneTranslation" class = "dataEntry">
+      <span id = "geneTranslationTag" class = "dataTag datuum">
+          Translation
+      </span>
+      <span id = "geneTranslationContent" class = "dataContent datuum">
+      </span>
+  </div>
+</div>
+
+<div id = "invitationToEditData" class = "invisible data" style = "border: none;">
+  <div id = "invitation" style= "margin: 20px; text-align: center;">
+      Click anywhere in the diagram to edit.
+  </div>
+</div>
+<mwc-snackbar id = "Rendering"
+  timeoutMs = "-1"
+  labelText = "Analyzing the genomes, please wait.">
+</mwc-snackbar>
+<mwc-dialog id = "citeUsDialog" class = "container" heading = "Cite us">
+  Roberto E. Durán, Vicente Saona Urmeneta (2021) "Genomic context diagram editor" Unpublished work, available at http://localhost:3030/
+  <mwc-button dialogAction = "close" slot = "primaryAction" raised>
+    Close
+  </mwc-button>
+</mwc-dialog>
+<mwc-snackbar id = "blastSearch"
+  timeoutMs = "-1"
+  labelText = "Searching for homologous, please wait a few minutes.">
+</mwc-snackbar>
+<mwc-snackbar id = "upload"
+  timeoutMs = "-1"
+  labelText = "Uploading your data, please wait a few seconds.">
+</mwc-snackbar>
+<mwc-snackbar id = "errorSnackbar"
+  timeoutMs = "4000"
+  labelText = "Something's odd here.">
+</mwc-snackbar>
+<footer>
+  <div class = "footer-column">
+    <div class = "footer-link">
+      <a href = "/user_manual.html">
+        Read user manual
+      </a>
+    </div>
+    <div class = "footer-link">
+      <a href = "/about_us.html">
+        About us
+      </a>
+    </div>
+    <div class = "footer-link">
+      <a onclick = "document.getElementById('citeUsDialog').show()">
+        Cite us
+      </a>
+    </div>
+    <div class = "footer-link">
+      Any questions, please write to vicente.saona@sansano.usm.cl
+    </div>
+  </div>
+</footer>
+
+<script>
+  
+  
+
+  /* set event listeners for form uploading */
+  
+
+  var tab1 = document.getElementById("tab1");
+  tab1.addEventListener("submit", function(event) {
+    new FormData(tab1);
+  });
+  tab1.addEventListener('formdata', event => {
+    var formElements = document.getElementById("tab1").getElementsByClassName("formData");
+    for(let el of formElements) {
+      event.formData.append(el.id, el.value.trim());
+    }
+    event.formData.append("amountOfContexts", window.amountOfContexts);
+  });
+
+  window.onunload = function(){};
+
+  document.getElementById("tutorial1").addEventListener('closing', (event) => {
+    if(event.detail.action == "next") {
+      document.getElementById("tutorial2").show();
+    }
+  });
+  document.getElementById("tutorial2").addEventListener('closing', (event) => {
+    if(event.detail.action == "back") {
+      document.getElementById("tutorial1").show();
+    }
+    if(event.detail.action == "next") {
+      document.getElementById("tutorial3").show();
+    }
+  });
+  document.getElementById("tutorial3").addEventListener('closing', (event) => {
+    if(event.detail.action == "back") {
+      document.getElementById("tutorial2").show();
+    }
+  });
+  if(window.tutorial) {
+    document.getElementById("tutorial1").show();
+  }
+
+  // Adding drag-and-drop files logic
+  ["genomaData0"].forEach(function (id) {
+    let genomaDataElement = document.getElementById(id);
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      genomaDataElement.addEventListener(eventName, preventDefaults, false)
+    });
+    ['dragenter', 'dragover'].forEach(eventName => {
+      genomaDataElement.addEventListener(eventName, highlight, false)
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      genomaDataElement.addEventListener(eventName, unhighlight, false)
+    });
+    genomaDataElement.addEventListener('drop', handleDrop, false);
+  });
+  
+</script>
+</body>
+</html>
