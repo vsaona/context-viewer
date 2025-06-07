@@ -79,9 +79,13 @@ async function updateFile(value, id) {
     contextSources[id].locusBegin = document.getElementById('desde' + id).value;
     contextSources[id].locusEnd = document.getElementById('hasta' + id).value;
     contextSources[id].contigs = [];
+    contextSources[id].activeContig = 0;
     newContig = true;
     features = false;
     interestGenes = false;
+    var skipThisFeature = false;
+    var propertyType;
+    var propertyContent;
     for (var lineIndex = 0; lineIndex < text.length; lineIndex++) {
       var line = text[lineIndex];
       // Extracting key data from the genoma
@@ -110,22 +114,39 @@ async function updateFile(value, id) {
       // Extracting genes data
       if(features) {
         if(interestGenes) {
-          if(line.match(/^..\s{3}\w+\s{2}/)) {
+          if(line.match(/^..\s{3}(source\s{10}|region\s{10}|protocluster\s{3}|proto_core\s{5}|cand_cluster\s{3}|Misc.{11})/i)) {
+            skipThisFeature = true;
+          } else if(line.match(/^..\s{3}\w+\s{2}/)) {
+            property_type = null;
+            skipThisFeature = false;
             if(line.match(/^..\s{3}\w+\s{2}.*?\d+\.\.(?:\d+\s,\s\d+\.\.)?\d+/)) {
               
               position = line.match(/^..\s{3}\w+\s{2}.*?(\d+)\.\.(?:\d+\s,\s\d+\.\.)?(\d+)/);
-              console.log("position");
-              console.log(position);
               if(position[1] != last_position[0] && position[2] != last_position[1]) {
-                contextSources[id].contigs.last().genes.push({begin: position[1], end: position[2], type: []});
+                contextSources[id].contigs.last().genes.push({start: position[1], end: position[2], type: []});
                 last_position = [position[1], position[2]];
               }
             }
             contextSources[id].contigs.last().genes.last().type.push(line.match(/^..\s{3}(\w+)\s{2}/)[1]);
-          } else if(line.match(/^..\s{19}\/(?:\w+)="(?:.*)"/)) {
-            let property_type = line.match(/^..\s{19}\/(\w+)="(.*)"/)[1];
-            let property_content = line.match(/^..\s{19}\/(\w+)="(.*)"/)[2];
-            contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+          } else if(line.match(/^..\s{19}\/(?:\w+)="(?:.*)/) && !skipThisFeature) {
+            property_type = line.match(/^..\s{19}\/(\w+)="(.*)/)[1];
+            if(line.match(/^..\s{19}\/(?:\w+)="(?:.*)"/)) {
+              property_content = line.match(/^..\s{19}\/(\w+)="(.*)"/)[2];
+              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+              property_type = null;
+            } else {
+              property_content = line.match(/^..\s{19}\/(\w+)="(.*)/)[2];
+              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+            }
+              
+          } else if(line.match(/^..\s{19}(?:[^\s]*)/) && !skipThisFeature && property_type) {
+            property_content = property_content + (property_type == "translation" ? "" : " " ) + line.match(/^..\s{19}(.*)/)[1];
+            if(property_content.match(/"$/)) {
+              contextSources[id].contigs.last().genes.last()[property_type] = property_content.slice(0,property_content.length-1);
+              property_type = null;
+            } else {
+              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+            }
           }
 
           
@@ -177,9 +198,15 @@ async function updateFile(value, id) {
           
       }
     }
-
   }
-  drawAll(contextSources[0].contigs);
+  window.genomas = [];
+  for(var genomaIndex = 0; genomaIndex < contextSources.length; genomaIndex++) {
+    window.genomas.push(contextSources[genomaIndex].contigs[contextSources[genomaIndex].activeContig]);
+  }
+  document.getElementById("canvas").innerHTML="";
+  window.minStart = 0;
+  window.maxEnd = 0;
+  drawAll(window.genomas);
 }
 
 // drag-and-drop functionality
@@ -199,7 +226,6 @@ function unhighlight(e) {
 }
 
 function handleDrop(e) {
-  console.log(this.id);
   if(e.dataTransfer.files.length > 1) {
     alert("Sorry, but you should select the files one by one.");
   } else if(this.id == "genomaSearchData" && e.dataTransfer.files.item(0).name.match(/.*\.f.*/)) {
