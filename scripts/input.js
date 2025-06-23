@@ -2,12 +2,93 @@ Array.prototype.last = function(){return this[this.length - 1];};
 Array.prototype.first = function(){return this[0];};
 window.addedInputGenomaisEven = true;
 window.genomasAmount = 1;
-window.contextSources = []
+window.contextSources = [];
+window.colors = [];
+window.allGeneNames = [];
+window.differentColors = 0;
 
 // drag-and-drop functionality
 function preventDefaults (e) {
   e.preventDefault()
   e.stopPropagation()
+}
+
+/* I wish there was a more efficient way to do this, I would like to re-think this.
+ * Probably integrating it with the rest of the analysis would help.
+ */
+function assignColors(contig) {
+  console.log("[AssignColors] assigning colors");
+  
+  for(var j = 0; j < contig.genes.length; j++) {
+    var gene = contig.genes[j];
+    if(allGeneNames.includes(gene.name) || allGeneNames.includes(gene.product)) {
+      for(var k = 0; k < colors.length; k++) {
+        if(colors[k].names.includes(gene.name) || colors[k].names.includes(gene.product)) {
+          colors[k].count++;
+          if(gene.name && !colors[k].names.includes(gene.name)) {
+            console.log(gene.name);
+            console.log("name");
+            colors[k].names.push(gene.name);
+            allGeneNames.push(gene.name);
+          }
+          if(gene.product && !colors[k].names.includes(gene.product)) {
+            console.log(gene.product);
+            console.log("product");
+            colors[k].names.push(gene.product);
+            allGeneNames.push(gene.product);
+          }
+        }
+      }
+    }
+    else {
+      if(gene.name)
+        allGeneNames.push(gene.name);
+      if(gene.product)
+        allGeneNames.push(gene.product);
+      if(gene.interest) {
+        colors.push({
+          names: [gene.name, gene.product],
+          count: 1,
+          color: "#BD3B32"
+        });
+      } else if(gene.product == "hypothetical protein" || (!gene.name && ! gene.product)) {
+        colors.push({names: [gene.name, gene.product],
+          count: 1,
+          color: "#C7C7C7"});
+      } else {
+        colors.push({
+          names: gene.name ? (
+            gene.product ?
+              [gene.name, gene.product]
+            :
+              [gene.name]
+          ):
+            [gene.product],
+          count: 1
+        });
+      }
+    }
+  }
+  
+  for(var k = 0; k < colors.length; k++) {
+    if(colors[k].count == 1 && !colors[k].color) {
+      //colors[k].names.forEach( name => {
+      //  allGeneNames.splice(allGeneNames.indexOf(name), 1);
+      //});
+    } else {
+      colors[k].color = colors[k].color ?? Color.hsv2hex({h:differentColors++ * 0.618033988749895 % 1.0 * 360, s:0.5, v:1});
+    }
+  }
+  for(var j = 0; j < contig.genes.length; j++) {
+    if((contig.genes[j].name && allGeneNames.includes(contig.genes[j].name)) || (contig.genes[j].product &&allGeneNames.includes(contig.genes[j].product))) {
+      for(var k = 0; k < colors.length; k++) {
+        if((contig.genes[j].name && colors[k].names.includes(contig.genes[j].name)) || ( contig.genes[j].product && colors[k].names.includes(contig.genes[j].product))) {
+          contig.genes[j].color = colors[k].color;
+        }
+      }
+    }
+  }
+  return(contig);
 }
 
 function addGenoma() {
@@ -68,6 +149,7 @@ function changeGenomaSource(value, id) {
 function selectFile(id) {
   document.getElementById('fileSelectButton' + id).click();
 }
+
 async function updateFile(value, id) {
   var path = value.split('\\');
   //document.getElementById('fileName' + id).innerText = path[path.length - 1];
@@ -102,6 +184,7 @@ async function updateFile(value, id) {
       else if(line.match(/\s*DEFINITION\s+(.*)/)) {
         contextSources[id].genomaName = line.match(/\s*DEFINITION\s+(.*)/)[1];
         contextSources[id].contigs.last().genomaDefinition = contextSources[id].genomaName;
+        contextSources[id].contigs.last().name = contextSources[id].genomaName;
         
       } else if(line.match(/\s*ACCESSION\s+(.*)/))
         contextSources[id].contigs.last().genomaAccession = line.match(/\s*ACCESSION\s+(.*)/)[1];
@@ -117,7 +200,7 @@ async function updateFile(value, id) {
           if(line.match(/^..\s{3}(source\s{10}|region\s{10}|protocluster\s{3}|proto_core\s{5}|cand_cluster\s{3}|Misc.{11})/i)) {
             skipThisFeature = true;
           } else if(line.match(/^..\s{3}\w+\s{2}/)) {
-            property_type = null;
+            propertyType = null;
             skipThisFeature = false;
             if(line.match(/^..\s{3}\w+\s{2}.*?\d+\.\.(?:\d+\s,\s\d+\.\.)?\d+/)) {
               
@@ -129,23 +212,35 @@ async function updateFile(value, id) {
             }
             contextSources[id].contigs.last().genes.last().type.push(line.match(/^..\s{3}(\w+)\s{2}/)[1]);
           } else if(line.match(/^..\s{19}\/(?:\w+)="(?:.*)/) && !skipThisFeature) {
-            property_type = line.match(/^..\s{19}\/(\w+)="(.*)/)[1];
+            propertyType = line.match(/^..\s{19}\/(\w+)="(.*)/)[1];
             if(line.match(/^..\s{19}\/(?:\w+)="(?:.*)"/)) {
-              property_content = line.match(/^..\s{19}\/(\w+)="(.*)"/)[2];
-              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
-              property_type = null;
+              propertyContent = line.match(/^..\s{19}\/(\w+)="(.*)"/)[2];
+              contextSources[id].contigs.last().genes.last()[propertyType] = propertyContent;
+              if(propertyType == "gene") {
+                contextSources[id].contigs.last().genes.last().name = propertyContent;
+              } else if((!contextSources[id].contigs.last().genes.last().name ||
+                        contextSources[id].contigs.last().genes.last().name != contextSources[id].contigs.last().genes.last().gene) &&
+                        propertyType == "locus_tag") { // TODO: Not sure this actually works, please test it.
+                contextSources[id].contigs.last().genes.last().name = propertyContent;
+              } else if((!contextSources[id].contigs.last().genes.last().name ||
+                        (contextSources[id].contigs.last().genes.last().name != contextSources[id].contigs.last().genes.last().gene && 
+                        contextSources[id].contigs.last().genes.last().name != contextSources[id].contigs.last().genes.last().locus_tag)) && 
+                        propertyType == "product") {
+                contextSources[id].contigs.last().genes.last().name = propertyContent;
+              }
+              propertyType = null;
             } else {
-              property_content = line.match(/^..\s{19}\/(\w+)="(.*)/)[2];
-              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+              propertyContent = line.match(/^..\s{19}\/(\w+)="(.*)/)[2];
+              contextSources[id].contigs.last().genes.last()[propertyType] = propertyContent;
             }
               
-          } else if(line.match(/^..\s{19}(?:[^\s]*)/) && !skipThisFeature && property_type) {
-            property_content = property_content + (property_type == "translation" ? "" : " " ) + line.match(/^..\s{19}(.*)/)[1];
-            if(property_content.match(/"$/)) {
-              contextSources[id].contigs.last().genes.last()[property_type] = property_content.slice(0,property_content.length-1);
-              property_type = null;
+          } else if(line.match(/^..\s{19}(?:[^\s]*)/) && !skipThisFeature && propertyType) {
+            propertyContent = propertyContent + (propertyType == "translation" ? "" : " " ) + line.match(/^..\s{19}(.*)/)[1];
+            if(propertyContent.match(/"$/)) {
+              contextSources[id].contigs.last().genes.last()[propertyType] = propertyContent.slice(0, propertyContent.length - 1);
+              propertyType = null;
             } else {
-              contextSources[id].contigs.last().genes.last()[property_type] = property_content;
+              contextSources[id].contigs.last().genes.last()[propertyType] = propertyContent;
             }
           }
 
@@ -201,7 +296,7 @@ async function updateFile(value, id) {
   }
   window.genomas = [];
   for(var genomaIndex = 0; genomaIndex < contextSources.length; genomaIndex++) {
-    window.genomas.push(contextSources[genomaIndex].contigs[contextSources[genomaIndex].activeContig]);
+    window.genomas.push(assignColors(contextSources[genomaIndex].contigs[contextSources[genomaIndex].activeContig]));
   }
   document.getElementById("canvas").innerHTML="";
   window.minStart = 0;

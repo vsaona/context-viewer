@@ -13,6 +13,7 @@ window.genomaElement = null;
 window.d3Genomas;
 window.itIsTheFirstTimeTheySelect = true;
 window.lastDeletedgene = null;
+window.colors = [];
 
 window.dragHandler = d3.drag().on("start", function () {
     var current = d3.select(this);
@@ -79,7 +80,7 @@ function activate(type, element, data) {
     if(type == "arrow") {
         d3.select("#arrowToolBar").classed("invisible", false);
         var arrowColor = document.getElementById("arrowColor");
-        document.getElementById("arrowStrokeWidthMwcTextField").layout();
+        //document.getElementById("arrowStrokeWidthMwcTextField").layout();
         //document.getElementById("arrowOpacity").layout();
         document.getElementById("arrowColor").layout();
         // setTimeout(function() { document.getElementById("arrowStyleSelector").value = arrowStyle; }, 200);
@@ -171,6 +172,8 @@ function updateColor(input) {
     }
 }
 function updateStrokeWidth(input) {
+    console.log("updateStroke");
+    console.log(input);
     d3.selectAll(".arrow").style("stroke-width", input.value);
 }
 function updateOpacity(input) {

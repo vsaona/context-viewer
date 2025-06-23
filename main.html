@@ -3,20 +3,38 @@
 <script src="mwc_bundle/mwc-material-bundle.min.js"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="scripts/color_conversion.js"></script>
 <script src="scripts/genomaData.js"></script>
 <script src="scripts/input.js"></script>
 <script src="scripts/render.js"></script>
 <script src="scripts/jscolor.js"></script>
 <link rel="stylesheet" href="stylesheets/mdc.css">
 <link rel="stylesheet" href="stylesheets/input.css">
+<link rel="stylesheet" href="stylesheets/editor.css">
 <!-- Your application must load the Roboto and Material Icons fonts. -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="importmap">
+  {
+    "imports": {
+      "@material/web/": "https://esm.run/@material/web/"
+    }
+  }
+</script>
+<script type="module">
+  import '@material/web/all.js';
+  import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+  document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+</script>
 <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 <link rel="icon" href="images/favicon.png">
 </head>
 <body>
 <header>
+  Genomic context diagram editor
+  <!--
 <div id = "Explicacion" class = "mdc-typography">
+  
   This tool can help you draw high-quality genomic context graphics.<br>
   Please, choose the contexts you want to draw. You can do this with "Draw my contexts" if you know exactly what you want to draw,
   or you may do a BLAST search with "BLAST &amp; Draw", and draw the results in their context.
@@ -25,6 +43,7 @@
   <mwc-button id = "language" label = "Ver en español">
   </mwc-button>
 </div>
+-->
 </header>
 
 <mwc-dialog id = "tutorial1" class = "container" heading = "Welcome!">
@@ -234,16 +253,15 @@
       data-jscolor = "{position:'top', previewElement:'none', onInput: 'updateColorField(this)'}"
       oninput = "updateColor(this)">
   </mwc-textfield>
-  <mwc-textfield
+  <md-outlined-text-field
       id = "arrowStrokeWidthMwcTextField"
-      outlined
       label = "Stroke width"
       type = "number"
       value = "0"
       step = "5"
       min = "0"
       oninput = "updateStrokeWidth(this)">
-  </mwc-textfield>
+  </md-outlined-text-field>
   <!--<mwc-textfield
       id = "arrowOpacity"
       outlined
