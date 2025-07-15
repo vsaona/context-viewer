@@ -160,6 +160,9 @@ function draw(genoma, y, group, scale = false){
 
 function updateColorField(picker) {
     document.getElementById('arrowColor').value = picker.toHEXString();
+    // TODO: Make the text visible if the color is dark 
+    // potential solutions: - Make the text white
+    //                      - The color could be shown not as background for whole box
     d3.select("#arrowColor").style("background-color", picker.toHEXString());
     d3.select(activeElement).style('fill', picker.toHEXString());
     d3.select(activeElement).data()[0].color = picker.toHEXString();

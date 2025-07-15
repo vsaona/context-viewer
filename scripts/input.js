@@ -301,6 +301,7 @@ async function updateFile(value, id) {
   document.getElementById("canvas").innerHTML="";
   window.minStart = 0;
   window.maxEnd = 0;
+  document.getElementById("imageToolBar").classList.remove("invisible");
   drawAll(window.genomas);
 }
 
